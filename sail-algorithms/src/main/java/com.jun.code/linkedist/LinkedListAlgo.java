@@ -1,4 +1,4 @@
-package linkedist;
+package com.jun.code.linkedist;
 
 /**
  * 1) 单链表反转

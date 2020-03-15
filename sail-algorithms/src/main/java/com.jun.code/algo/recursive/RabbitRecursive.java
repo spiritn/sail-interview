@@ -1,4 +1,4 @@
-package algo.recursive;
+package com.jun.code.algo.recursive;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 public class RabbitRecursive {
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
 
     }
 

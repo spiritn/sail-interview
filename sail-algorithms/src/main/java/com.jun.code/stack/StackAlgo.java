@@ -1,4 +1,5 @@
-package stack;
+package com.jun.code.stack;
+
 
 /**
  * @author Jun

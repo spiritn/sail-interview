@@ -1,6 +1,5 @@
-package algo.sort;
+package com.jun.code.algo.sort;
 
-import java.util.Random;
 
 /**
  * 1.冒泡排序

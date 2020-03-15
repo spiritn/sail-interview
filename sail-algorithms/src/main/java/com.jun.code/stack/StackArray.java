@@ -1,4 +1,4 @@
-package stack;
+package com.jun.code.stack;
 
 /**
  * 利用数组来实现栈

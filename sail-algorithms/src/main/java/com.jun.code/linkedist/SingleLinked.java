@@ -1,4 +1,5 @@
-package linkedist;
+package com.jun.code.linkedist;
+
 
 /**
  * 实现单向链表
