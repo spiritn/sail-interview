@@ -21,6 +21,7 @@
     <modules>
        <module>sail-thread</module>
        <module>sail-algorithms</module>
+        <module>sail-java</module>
     </modules>
 
     <properties>
