@@ -9,7 +9,7 @@
     <artifactId>sail-parent-dependence</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
-    <!--父项目的坐标，父POM 包含了一些可以被继承的默认设置-->
+    <!--父项目的坐标11，父POM 包含了一些可以被继承的默认设置-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
