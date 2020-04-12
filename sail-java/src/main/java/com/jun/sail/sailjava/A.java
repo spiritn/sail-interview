@@ -6,5 +6,9 @@ package com.jun.sail.sailjava;
  */
 public class A {
 
+    public static void main(String[] args) {
+        System.out.println("niao a ");
+    }
+
 
 }
