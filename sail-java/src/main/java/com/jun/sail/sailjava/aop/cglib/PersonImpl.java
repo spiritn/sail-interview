@@ -16,7 +16,7 @@ public class PersonImpl {
      */
     final public String sayOthers(String name) {
         System.out.println("PersonImpl.sayOthers" + name);
-        System.out.println("ceshi 111");
+        System.out.println("ceshi 222");
         return null;
     }
 
