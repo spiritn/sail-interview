@@ -13,6 +13,7 @@ public class PersonImpl {
 
     /**
      * 该方法不能被子类覆盖,Cglib是无法代理final修饰的方法的
+     * dev2
      */
     final public String sayOthers(String name) {
         System.out.println("PersonImpl.sayOthers" + name);
