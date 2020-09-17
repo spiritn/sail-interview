@@ -6,7 +6,7 @@
     <packaging>pom</packaging>
 
     <groupId>com.jun.sail</groupId>
-    <artifactId>sail-parent-dependence</artifactId>
+    <artifactId>sail-java-base</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <!--父项目的坐标11，父POM 包含了一些可以被继承的默认设置-->
@@ -19,8 +19,8 @@
 
     <!--为了方便统一打包，做成聚合模块-->
     <modules>
-       <module>sail-thread</module>
-       <module>sail-algorithms</module>
+        <module>sail-thread</module>
+        <module>sail-algorithms</module>
         <module>sail-java</module>
     </modules>
 
@@ -199,7 +199,6 @@
             <!--Swagger end-->
 
 
-
             <!--Commons begin-->
             <dependency>
                 <groupId>commons-beanutils</groupId>
@@ -246,13 +245,6 @@
                 <groupId>cglib</groupId>
                 <artifactId>cglib-nodep</artifactId>
                 <version>${cglib.version}</version>
-            </dependency>
-
-            <!--兼容JDK 11需要-->
-            <dependency>
-                <groupId>javax.annotation</groupId>
-                <artifactId>javax.annotation-api</artifactId>
-                <version>${javax.annotation.version}</version>
             </dependency>
 
         </dependencies>
