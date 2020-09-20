@@ -163,6 +163,11 @@ public class BST {
      * ====================
      */
     public void printTree() {
+
+        preOrderRecursion(root);
+        preOrderStack(root);
+        System.out.println("前根序遍历");
+
         inOrderRecursion(root);
         inOrderStack(root);
         System.out.println("中续遍历");
@@ -258,8 +263,6 @@ public class BST {
 
     /**
      * 使用栈后序遍历
-     *
-     * @param node
      */
     public void postOrderStack(TreeNode node) {
         if (node == null) {
@@ -290,16 +293,17 @@ public class BST {
         if (node == null) {
             return;
         }
-        ArrayDeque<TreeNode> queue = new ArrayDeque<>(1);
-        queue.push(node);
+        // 用一个单向队列
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(node);
         while (!queue.isEmpty()) {
-            TreeNode current = queue.pollLast();
+            TreeNode current = queue.poll();
             System.out.print(current.value + " ");
             if (current.left != null) {
-                queue.push(current.left);
+                queue.add(current.left);
             }
             if (current.right != null) {
-                queue.push(current.right);
+                queue.add(current.right);
             }
         }
     }
@@ -312,21 +316,21 @@ public class BST {
             return Collections.emptyList();
         }
         List<List<Integer>> result = new ArrayList<>();
-
-        ArrayDeque<TreeNode> queue = new ArrayDeque<>(1);
         List<Integer> temp;
-        queue.push(node);
+
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(node);
         while (!queue.isEmpty()) {
             temp = new ArrayList<>();
             int size = queue.size();
             while (size-- > 0) {
-                TreeNode current = queue.pollLast();
+                TreeNode current = queue.poll();
                 temp.add(current.value);
                 if (current.left != null) {
-                    queue.push(current.left);
+                    queue.add(current.left);
                 }
                 if (current.right != null) {
-                    queue.push(current.right);
+                    queue.add(current.right);
                 }
             }
             result.add(temp);
