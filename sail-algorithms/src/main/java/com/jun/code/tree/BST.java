@@ -1,6 +1,8 @@
 package com.jun.code.tree;
 
 
+import apple.laf.JRSUIUtils;
+
 import java.util.*;
 
 /**
@@ -13,7 +15,7 @@ public class BST {
         bst.insert(5);
         bst.insert(12);
         bst.insert(19);
-        bst.insert(20);
+        bst.insert(5);
         bst.insert(2);
         TreeNode treeNode = bst.get(5);
 
@@ -48,25 +50,22 @@ public class BST {
             return;
         }
 
-        // 需要两个指针
         TreeNode current = root;
-        TreeNode parent;
         while (true) {
-            parent = current;
             // 遍历查找，比较大小分三种情况
-            if (key > parent.value) { // 大于parentNode
-                current = parent.right;
-                if (current == null) {
-                    parent.right = new TreeNode(key);
+            if (key > current.value) { // 大于
+                if (current.right == null) {
+                    current.right = new TreeNode(key);
                     return;
                 }
-            } else if (key < parent.value) { // 小于parentNode
-                current = parent.left;
-                if (current == null) {
-                    parent.left = new TreeNode(key);
+                current = current.right;
+            } else if (key < current.value) { // 小于
+                if (current.left == null) {
+                    current.left = new TreeNode(key);
                     return;
                 }
-            } else { // 相等 直接返回
+                current = current.left;
+            } else {
                 return;
             }
         }
@@ -178,6 +177,7 @@ public class BST {
 
         bfs(root);
         bfs2(root);
+        System.out.println("层级遍历");
     }
 
     /**
@@ -241,22 +241,22 @@ public class BST {
     /**
      * 利用栈中根序遍历
      */
-    public void inOrderStack(TreeNode node) {
-        if (node == null) {
+    public void inOrderStack(TreeNode root) {
+        if (root == null) {
             return;
         }
         Stack<TreeNode> stack = new Stack<>();
-        TreeNode current = node;
+        TreeNode current = root;
         while (!stack.isEmpty() || current != null) {
             while (current != null) {
                 stack.push(current);
                 current = current.left;
             }
 
-            TreeNode node1 = stack.pop();
-            System.out.print(node1.value + " ");
-            if (node1.right != null) {
-                current = node1.right;
+            TreeNode node = stack.pop();
+            System.out.print(node.value + " ");
+            if (node.right != null) {
+                current = node.right;
             }
         }
     }
@@ -264,21 +264,21 @@ public class BST {
     /**
      * 使用栈后序遍历
      */
-    public void postOrderStack(TreeNode node) {
-        if (node == null) {
+    public void postOrderStack(TreeNode root) {
+        if (root == null) {
             return;
         }
         Stack<TreeNode> stack = new Stack<>();
         Stack<TreeNode> resultStack = new Stack<>();
-        stack.push(node);
+        stack.push(root);
         while (!stack.isEmpty()) {
-            TreeNode node1 = stack.pop();
-            resultStack.push(node1);
-            if (node1.left != null) {
-                stack.push(node1.left);
+            TreeNode node = stack.pop();
+            resultStack.push(node);
+            if (node.left != null) {
+                stack.push(node.left);
             }
-            if (node1.right != null) {
-                stack.push(node1.right);
+            if (node.right != null) {
+                stack.push(node.right);
             }
         }
         while (!resultStack.isEmpty()) {
@@ -335,7 +335,7 @@ public class BST {
             }
             result.add(temp);
         }
-        System.out.println(result);
+        System.out.print(result);
         return result;
     }
 }
