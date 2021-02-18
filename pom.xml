@@ -53,7 +53,7 @@
         <junit.version>4.12</junit.version>
         <jmockit.version>1.20</jmockit.version>
 
-        <jackson.version>2.10.1</jackson.version>
+        <jackson.version>2.12.1</jackson.version>
 
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <swagger-models.version>1.5.20</swagger-models.version>
