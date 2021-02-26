@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hikvision.ebg.res.sync.dao.ModelDao">
+
+    <delete id="deleteTempTable">
+        truncate ${tableName}_temp cascade
+    </delete>
+
+    <insert id="insertTempTable">
+        insert into ${model.tableName}_temp
+        <foreach collection="model.fieldNameList" item="key" open="(" close=")" separator="," >
+            ${key}
+        </foreach>
+        values
+        <foreach collection="list" item="map" index="i" separator=",">
+            <foreach collection="model.propertyNameList"  item="k" open="(" close=")" separator=",">
+                #{list[${i}].${k}}
+            </foreach>
+        </foreach>
+    </insert>
+
+    <insert id="insertNew">
+        insert into ${model.tableName}
+        <foreach collection="model.fieldNameList" item="key" open="(" close=")" separator="," >
+            ${key}
+        </foreach>
+        select
+        <foreach collection="model.fieldNameList" item="key" separator="," >
+            a.${key}
+        </foreach>
+        from ${model.tableName}_temp a
+        left join ${model.tableName} b
+        on a.${model.idName} = b.${model.idName}
+        where b.${model.idName} is null
+    </insert>
+
+    <update id="updateChange">
+        update ${model.tableName}
+        set
+        <foreach collection="model.fieldNameList" item="key" separator=",">
+            ${key}=m.${key}
+        </foreach>
+        from
+        (
+        select
+        <foreach collection="model.fieldNameList" item="key" separator=",">
+            a.${key}
+        </foreach>
+        from ${model.tableName}_temp a
+        left join ${model.tableName} b
+        on a.${model.idName} = b.${model.idName}
+        where b.${model.idName} is not null
+        and a.update_time > b.update_time
+        ) m
+        where ${model.tableName}.${model.idName} = m.${model.idName}
+    </update>
+
+    <update id="setTempTableStatus">
+        update ${model.tableName}_temp
+        set status = #{status}
+    </update>
+
+    <update id="updateDeleteLogically">
+        update ${model.tableName}
+        set status = 1
+        where ${model.idName}
+        in
+        (
+            select a.${model.idName} from ${model.tableName} a
+            left join ${model.tableName}_temp b
+            on a.${model.idName}  = b.${model.idName}
+            where b.${model.idName}  is  null
+        )
+    </update>
+
+    <delete id="updateDelete">
+        delete from ${model.tableName}
+        where ${model.idName}
+        in
+        (
+            select a.${model.idName} from ${model.tableName} a
+            left join ${model.tableName}_temp b
+            on a.${model.idName}  = b.${model.idName}
+            where b.${model.idName}  is  null
+        )
+    </delete>
+
+
+    <delete id="deleteByIdList">
+        delete from ${model.tableName}
+        where ${model.idName}
+        in
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteExist">
+        delete from ${model.tableName}
+        where ${model.idName}
+        in
+        (select ${model.idName} from ${model.tableName}_temp)
+        and status = 1;
+    </delete>
+
+    <update id="deleteLogicallyByIdList">
+        update ${model.tableName}
+        set status = 1
+        where ${model.idName}
+        in
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateBatch">
+        update ${model.tableName}
+        set
+        <foreach collection="model.fieldNameList" item="key" separator=",">
+            ${key}=m.${key}
+        </foreach>
+        from
+        (
+        select
+        <foreach collection="model.fieldNameList" item="key" separator=",">
+            a.${key}
+        </foreach>
+        from ${model.tableName}_temp a
+        left join ${model.tableName} b
+        on a.${model.idName} = b.${model.idName}
+        where b.${model.idName} is not null
+        ) m
+        where ${model.tableName}.${model.idName} = m.${model.idName}
+    </update>
+
+
+    <select id="getModelListByModelDataIdList" resultType="java.util.Map">
+        select
+        <foreach collection="model.fieldNameList" item="key" separator=",">
+            ${key}
+        </foreach>
+        from ${model.tableName}
+        where model_data_id
+        in
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+
+    <select id="getAddDataList" resultType="java.util.Map">
+        select
+            <foreach collection="model.fieldNameList" item="key" separator=",">
+                a.${key}
+            </foreach>
+        from ${model.tableName}_temp a
+        left join ${model.tableName} b
+        on a.${model.idName} = b.${model.idName}
+        where b.${model.idName} is null
+    </select>
+
+    <select id="getDeleteDataList" resultType="java.util.Map">
+        select
+            <foreach collection="model.fieldNameList" item="key" separator=",">
+                a.${key}
+            </foreach>
+        from ${model.tableName} a
+        left join ${model.tableName}_temp b
+        on a.${model.idName}  = b.${model.idName}
+        where b.${model.idName} is null
+        <if test="model.tombstone">
+            and (a.status = 0 or a.status is null)
+        </if>
+
+    </select>
+
+    <select id="getUpdateDataList" resultType="java.util.Map">
+        select
+        <foreach collection="model.fieldNameList" item="key" separator=",">
+            a.${key}
+        </foreach>
+        from ${model.tableName}_temp a
+        left join ${model.tableName} b
+        on a.${model.idName} = b.${model.idName}
+        where b.${model.idName} is not null
+        and a.update_time > b.update_time
+    </select>
+
+    <select id="getOldDataList" resultType="java.util.Map">
+        select
+        <foreach collection="model.fieldNameList" item="key" separator=",">
+            b.${key}
+        </foreach>
+        from ${model.tableName}_temp a
+        left join ${model.tableName} b
+        on a.${model.idName} = b.${model.idName}
+        where b.${model.idName} is not null
+        and a.update_time > b.update_time
+    </select>
+
+    <update id="createTempTable">
+        CREATE TABLE IF NOT EXISTS ${tableName}_temp (LIKE ${tableName} INCLUDING ALL)
+    </update>
+
+</mapper>

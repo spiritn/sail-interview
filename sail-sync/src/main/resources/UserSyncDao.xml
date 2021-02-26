@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hikvision.ebg.res.sync.dao.UserSyncDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hikvision.ebg.res.sync.entity.SyncUser">
+        <id column="user_uuid" property="userUuid" />
+        <result column="user_name" property="userName" />
+        <result column="group_uuid" property="groupUuid" />
+        <result column="group_name" property="groupName" />
+        <result column="is_delete" property="isDelete" />
+        <result column="is_enable" property="isEnable" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="display_name" property="displayName" />
+        <result column="person_name" property="personName" />
+    </resultMap>
+
+
+    <delete id="deleteAll">
+        delete from tb_user;
+    </delete>
+
+    <delete id="deleteTemplateAll">
+        delete from tb_user_temp;
+    </delete>
+
+    <insert id="insertTemplate">
+        insert into tb_user_temp (user_uuid, user_name, group_uuid, group_name,
+        is_delete, is_enable, create_time, update_time, display_name,
+        person_name)
+        values
+        <foreach collection="list" item="user" separator=",">
+            (
+            #{user.userUuid},
+            #{user.userName},
+            #{user.groupUuid},
+            #{user.groupName},
+            #{user.isDelete},
+            #{user.isEnable},
+            #{user.createTime},
+            #{user.updateTime},
+            #{user.displayName},
+            #{user.personName}
+            )
+        </foreach>
+
+    </insert>
+
+    <insert id="insertNew">
+        insert into tb_user (user_uuid, user_name, group_uuid, group_name,
+        is_delete, is_enable, create_time, update_time,
+        display_name, person_name)
+        select a.user_uuid, a.user_name, a.group_uuid, a.group_name,
+        a.is_delete, a.is_enable, a.create_time, a.update_time,
+        a.display_name, a.person_name
+        from tb_user_temp a
+        left join tb_user b
+        on a.user_uuid = b.user_uuid
+        where b.user_uuid is null
+    </insert>
+
+
+    <update id="updateChange">
+        update tb_user
+        set user_name = m.t_user_name, group_uuid= m.t_group_uuid,
+        group_name=m.t_group_name, is_delete = m.t_is_delete, is_enable=m.t_is_enable,
+        create_time=m.t_create_time, update_time= m.t_update_time, display_name=m.t_display_name,
+        person_name = m.t_person_name
+        from
+        (select a.user_uuid as t_user_uuid ,a.user_name as t_user_name , a.group_uuid as t_group_uuid,
+        a.group_name as t_group_name, a.is_delete as t_is_delete, a.is_enable as t_is_enable,
+        a.create_time as t_create_time, a.update_time as t_update_time, a.display_name as t_display_name,
+        a.person_name as t_person_name
+        from tb_user_temp a
+        left join tb_user b
+        on a.user_uuid = b.user_uuid
+        where b.user_uuid is not null ) m
+        where tb_user.user_uuid = m.t_user_uuid
+    </update>
+
+    <update id="updateDelete">
+         update tb_user  set is_delete = 1 from
+        (select a.user_uuid as t_user_uuid  from tb_user a
+        left join tb_user_temp b
+        on a.user_uuid = b.user_uuid
+        where b.user_uuid is  null ) m  where tb_user.user_uuid = m.t_user_uuid
+    </update>
+
+    <update id="fakeDeleteByIds">
+        update tb_user set is_delete=1, update_time=now() where user_uuid in
+        <foreach collection="list" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </update>
+
+    <select id="getUserListById" resultMap="BaseResultMap">
+        select user_uuid, user_name, group_name, group_uuid,
+        is_delete, is_enable, create_time, update_time,
+        display_name, person_name
+        from tb_user
+        where user_uuid in
+        <foreach collection="list" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </select>
+
+    <select id="selectUserByNameTotal" resultType="java.lang.Long">
+        select count(1) from tb_user
+        where is_delete=0 and is_enable=0 and user_uuid!= 'admin'
+        <if test="userName != null and userName != '' ">
+            and display_name ilike '%'||#{userName}||'%'
+        </if>
+    </select>
+</mapper>
