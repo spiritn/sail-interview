@@ -10,6 +10,10 @@ package com.jun.code.algo.sort;
 public class SortDemo {
 	public static void main(String[] args) {
 
+		int[] arr = {1,2,3,4,5,6};
+
+		binarySearch(arr, 2);
+
 		////一百的数组
 		//Random ran = new Random();
 		//int[] arr = new int[100];
@@ -106,7 +110,6 @@ public class SortDemo {
 			}
 		}
 	}
-
 
 	/**
 	 * 二分法查找

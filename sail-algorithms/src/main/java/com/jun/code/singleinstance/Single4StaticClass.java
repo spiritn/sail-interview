@@ -1,5 +1,6 @@
 package com.jun.code.singleinstance;
 
+
 /**
  * 利用静态内部类来实现单例莫模式
  *

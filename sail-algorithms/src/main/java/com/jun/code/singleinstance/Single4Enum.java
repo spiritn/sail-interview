@@ -25,6 +25,7 @@ public class Single4Enum {
         INSTANCE;
 
         private Single4Enum single4Enum;
+
         InstanceEnum(){
             single4Enum = new Single4Enum();
         }

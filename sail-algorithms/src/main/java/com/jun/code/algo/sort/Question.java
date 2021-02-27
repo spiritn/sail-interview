@@ -1,4 +1,4 @@
-package algo.sort;
+package com.jun.code.algo.sort;
 
 /**
  * @author Jun

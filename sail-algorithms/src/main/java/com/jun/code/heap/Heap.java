@@ -37,7 +37,7 @@ public class Heap {
             return;
         }
 
-        a[count++] = data;
+        a[++count] = data;
         int i = count;
         while (i / 2 > 0 && a[i] > a[i / 2]) {
             // 交换swap两个
@@ -58,29 +58,7 @@ public class Heap {
         heapify(a, n, 1);
     }
 
-    /**
-     * 利用insert方法 进行堆化，即转化为一个堆
-     */
-    public Heap heapifyByInsert(int[] a) {
-        // 因为是heap从1开始存储，所以需要多存一个
-        Heap heap = new Heap(a.length + 1);
-        for (int i : a) {
-            heap.insert(i);
-        }
 
-        return heap;
-    }
-
-    public static Heap buildHeap(int[] a) {
-        Heap heap = new Heap(a.length);
-        heap.setA(a);
-        heap.setCount(a.length);
-
-        for (int i = a.length / 2; i >= 1; i--) {
-            heap.heapify(a, a.length - 1, i);
-        }
-        return heap;
-    }
 
     /**
      * 往下堆化

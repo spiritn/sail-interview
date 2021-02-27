@@ -7,8 +7,8 @@ package com.jun.code.heap;
 public class HeapTest {
 
     public static void main(String[] args) {
-        int[] a = {2, 9, 8, 1, 6, 4, 5};
-        Heap heap = Heap.buildHeap(a);
+        int[] a = {2, 9, 8, 1, 6, 7, 5};
+        Heap heap = HeapUtils.buildHeapByInsert(a);
         System.out.println(heap);
 
         heap.removeMax();

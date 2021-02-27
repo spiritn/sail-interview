@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>com.jun.sail</groupId>
-        <artifactId>sail-java-base</artifactId>
+        <artifactId>sail-parent-dependence</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
