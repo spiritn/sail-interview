@@ -1,5 +1,4 @@
-package com.jun.code.linkedist;
-
+package com.jun.code.linear.linkedlist;
 
 /**
  * 实现单向链表
@@ -8,6 +7,21 @@ package com.jun.code.linkedist;
  * 创建时间： 2020/2/10
  */
 public class SingleLinked<E> implements ILinked<E> {
+
+    private int size = 0;
+
+    public Node<E> first;
+
+    public static class Node<E> {
+        E data;
+
+        public Node<E> next;
+
+        Node(E e, Node<E> next) {
+            this.data = e;
+            this.next = next;
+        }
+    }
 
     public static void main(String[] args) {
         SingleLinked<String> listNode = new SingleLinked<>();
@@ -19,45 +33,36 @@ public class SingleLinked<E> implements ILinked<E> {
         listNode.add("e");
         listNode.add("f");
 
-        listNode.reverseLinked(listNode.first);
+        listNode.reverse(listNode.first);
 
         System.out.println(listNode);
     }
-
+    public void reverse(Node<E> head){
+        Node<E> prev = null;
+        Node<E> curr = head;
+        while (curr != null){
+            Node<E> next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        first = prev;
+    }
 
     public Node<E> reverseLinked(Node<E> head) {
         Node<E> prev = null;
         Node<E> curr = head;
 
-        //prev跟在curr后，逐步向后走
+        // prev跟在curr后，逐步向后走
         while (curr != null) {
-            Node next = curr.next;
+            Node<E> next = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
         }
         first = prev;
         return prev;
-
     }
-
-
-    private int size = 0;
-
-    private Node<E> first;
-
-    static class Node<E> {
-
-        E data;
-
-        Node<E> next;
-
-        Node(E e, Node<E> next) {
-            this.data = e;
-            this.next = next;
-        }
-    }
-
 
     @Override
     public E get(int index) {
@@ -105,8 +110,6 @@ public class SingleLinked<E> implements ILinked<E> {
         size++;
     }
 
-
-
     private void checkIndex(int index) {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("index is error");
@@ -138,7 +141,6 @@ public class SingleLinked<E> implements ILinked<E> {
         return size;
     }
 
-
     private Node<E> node(int index) {
         Node<E> node = first;
         for (int i = 0; i < index; i++) {
@@ -156,6 +158,5 @@ public class SingleLinked<E> implements ILinked<E> {
         sb.append("]");
         return sb.toString();
     }
-
 
 }

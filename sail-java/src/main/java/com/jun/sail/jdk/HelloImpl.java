@@ -1,6 +1,4 @@
-package com.jun.sail.sailjava.aop.jdk;
-
-import com.jun.sail.sailjava.aop.jdk.IHello;
+package com.jun.sail.jdk;
 
 /**
  * @author Jun

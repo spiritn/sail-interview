@@ -1,4 +1,4 @@
-package com.jun.sail.sailjava.aop.jdk;
+package com.jun.sail.jdk;
 
 /**
  * @author Jun

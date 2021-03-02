@@ -1,6 +1,4 @@
-package com.jun.code.linkedist;
-
-
+package com.jun.code.linear.linkedlist;
 
 /**
  * 实现双向链表,参考LinkedList（注意LinkedList实现了双向链表和队列）

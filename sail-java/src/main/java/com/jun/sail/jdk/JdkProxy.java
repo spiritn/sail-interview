@@ -1,4 +1,4 @@
-package com.jun.sail.sailjava.aop.jdk;
+package com.jun.sail.jdk;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

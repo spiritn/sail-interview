@@ -1,4 +1,4 @@
-package com.jun.code.linkedist;
+package com.jun.code.linear.linkedlist;
 
 /**
  * @author Jun

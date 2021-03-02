@@ -1,4 +1,4 @@
-package com.jun.sail.sailjava.aop.cglib;
+package com.jun.sail.cglib;
 
 /**
  * @author Jun

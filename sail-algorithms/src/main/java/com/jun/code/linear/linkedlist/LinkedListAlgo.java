@@ -1,4 +1,4 @@
-package com.jun.code.linkedist;
+package com.jun.code.linear.linkedlist;
 
 /**
  * 1) 单链表反转
@@ -223,12 +223,9 @@ public class LinkedListAlgo {
     return head;
   }
 
-
-
-
   public static class Node {
     private int data;
-    private Node next;
+    public Node next;
 
     public Node(int data, Node next) {
       this.data = data;

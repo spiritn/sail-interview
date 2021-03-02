@@ -1,4 +1,4 @@
-package com.jun.code.singleinstance;
+package com.jun.sail.singleinstance;
 
 
 /**

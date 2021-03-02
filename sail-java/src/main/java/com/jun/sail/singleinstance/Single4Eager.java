@@ -1,4 +1,4 @@
-package com.jun.code.singleinstance;
+package com.jun.sail.singleinstance;
 
 /**
  * 饿汉式实现单例模式

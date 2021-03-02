@@ -1,4 +1,4 @@
-package com.jun.sail.sailjava.aop.cglib;
+package com.jun.sail.cglib;
 
 import org.springframework.cglib.core.DebuggingClassWriter;
 import org.springframework.cglib.proxy.Enhancer;

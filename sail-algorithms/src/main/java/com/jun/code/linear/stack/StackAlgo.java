@@ -1,4 +1,4 @@
-package com.jun.code.stack;
+package com.jun.code.linear.stack;
 
 
 /**

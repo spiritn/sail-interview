@@ -1,4 +1,4 @@
-package com.jun.code.singleinstance;
+package com.jun.sail.singleinstance;
 
 /**
  * 双重检查锁来实现单例模式
