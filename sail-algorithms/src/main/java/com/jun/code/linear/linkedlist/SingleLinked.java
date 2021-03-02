@@ -33,36 +33,9 @@ public class SingleLinked<E> implements ILinked<E> {
         listNode.add("e");
         listNode.add("f");
 
-        listNode.reverse(listNode.first);
-
         System.out.println(listNode);
     }
-    public void reverse(Node<E> head){
-        Node<E> prev = null;
-        Node<E> curr = head;
-        while (curr != null){
-            Node<E> next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        first = prev;
-    }
 
-    public Node<E> reverseLinked(Node<E> head) {
-        Node<E> prev = null;
-        Node<E> curr = head;
-
-        // prev跟在curr后，逐步向后走
-        while (curr != null) {
-            Node<E> next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        first = prev;
-        return prev;
-    }
 
     @Override
     public E get(int index) {

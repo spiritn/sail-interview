@@ -49,9 +49,9 @@ public class LinkedListAlgo {
     Node curr = head;
     Node next;
 
-    //其实就是prev跟着curr，往后走
+    // 其实就是prev跟着curr，往后走
     while(curr != null){
-      //注意这样记忆，顺序上一行的右边就是下一行的左边
+      // 注意这样记忆，顺序上一行的右边就是下一行的左边
       next = curr.next;
       curr.next = prev;
       prev = curr;
@@ -59,7 +59,6 @@ public class LinkedListAlgo {
     }
     return prev;
   }
-
 
   /**
    * 寻找中间结点
