@@ -1,5 +1,6 @@
-package com.jun.code.linear.linkedlist;
+package com.jun.code.linear.linkedlist.impl;
 
+import com.jun.code.linear.linkedlist.*;
 /**
  * 实现单向链表
  *
