@@ -10,28 +10,33 @@ public class OneShotLatch {
 
     private Sync sync = new Sync();
 
-    public void await() {
-        //调用AQS的acquireShared
-        sync.acquireShared(0);
+    public void await() throws InterruptedException {
+        // 调用AQS的acquireShared，这里的参数没有使用到，实际没啥意义
+        sync.acquireSharedInterruptibly(1);
     }
 
-    public void singal() {
-        //调用AQS的releaseShared
+    public void signal() {
+        // 调用AQS的releaseShared
         sync.releaseShared(1);
     }
 
 
-    private class Sync extends AbstractQueuedSynchronizer {
+    private static class Sync extends AbstractQueuedSynchronizer {
 
+        /**
+         * if (tryAcquireShared(arg) < 0)
+         *     doAcquireSharedInterruptibly(arg);
+         * @return -1就会进入阻塞队列，1就是获取锁成功
+         */
         @Override
         protected int tryAcquireShared(int arg) {
-            //-1会进入阻塞队列，1就是获取锁成功
-            return getState() == 1 ? 1 : -1;
+            // state int默认是0，不等于0说明release方法被执行了
+            // 线程这里getState()获取不是0，就返回1，根据代码就不会进入阻塞队列，就相当于获取到锁了
+            return getState() != 0 ? 1 : -1;
         }
 
         /**
-         * @param arg
-         * @return true代表应该唤醒队列中的线程了，false代表还没防闸应该进入阻塞队列等待
+         * @return true代表应该唤醒队列中的线程了，false代表还没放闸应该进入阻塞队列等待
          */
         @Override
         protected boolean tryReleaseShared(int arg) {
@@ -47,7 +52,11 @@ public class OneShotLatch {
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
                 System.out.println(Thread.currentThread().getName() + " 尝试获取latch。。。。");
-                oneShotLatch.await();
+                try {
+                    oneShotLatch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(Thread.currentThread().getName() + " 开闸放行");
             }).start();
         }
@@ -58,8 +67,6 @@ public class OneShotLatch {
             e.printStackTrace();
         }
         //开闸
-        oneShotLatch.singal();
-
-
+        oneShotLatch.signal();
     }
 }
