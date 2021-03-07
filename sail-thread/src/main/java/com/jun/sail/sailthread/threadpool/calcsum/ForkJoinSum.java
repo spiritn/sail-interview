@@ -25,7 +25,7 @@ public class ForkJoinSum {
         private long start;
         private long end;
 
-        private static final long THRESHOLD = 10000;
+        private static final long THRESHOLD = 1000;
 
         public ForkJoinCalc(long start, long end) {
             this.start = start;

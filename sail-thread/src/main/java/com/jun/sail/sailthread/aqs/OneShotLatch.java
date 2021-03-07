@@ -4,7 +4,11 @@ package com.jun.sail.sailthread.aqs;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
- * 自己用一个AQS实现一个简单的线程协作器，类似CountDownLatch个数为1
+ * 自己用一个AQS实现一个简单的线程协作器，
+ * 这是一个类似于CountDownLatch的闩锁类，只不过个数为1，只需要触发signal即可。
+ * 因为闩锁是共享性的，所以它使用shared获取和释放方法
+ * <p>
+ * 代码取自AQS源码注释中举例
  */
 public class OneShotLatch {
 
@@ -25,13 +29,14 @@ public class OneShotLatch {
 
         /**
          * if (tryAcquireShared(arg) < 0)
-         *     doAcquireSharedInterruptibly(arg);
+         * doAcquireSharedInterruptibly(arg);
+         *
          * @return -1就会进入阻塞队列，1就是获取锁成功
          */
         @Override
         protected int tryAcquireShared(int arg) {
             // state int默认是0，不等于0说明release方法被执行了
-            // 线程这里getState()获取不是0，就返回1，根据代码就不会进入阻塞队列，就相当于获取到锁了
+            // 线程这里getState()不是0，就返回1，根据代码就不会进入阻塞队列，就相当于获取到锁了
             return getState() != 0 ? 1 : -1;
         }
 
@@ -66,7 +71,7 @@ public class OneShotLatch {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //开闸
+        // 开闸，不像countDownLatch需要每个线程倒数
         oneShotLatch.signal();
     }
 }

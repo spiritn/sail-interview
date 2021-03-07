@@ -11,7 +11,7 @@ import java.util.concurrent.*;
 public class MultiThreadSum {
 
     public static void main(String[] args) {
-        int n = 100000;
+        int n = 10000000;
         int numThread = 3;
         ExecutorService threadPool = Executors.newFixedThreadPool(numThread);
 

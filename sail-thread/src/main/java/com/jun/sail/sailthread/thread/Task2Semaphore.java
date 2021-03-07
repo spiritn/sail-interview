@@ -4,6 +4,7 @@ import java.util.concurrent.Semaphore;
 
 /**
  * Semaphore 是一个计数信号量，必须由获取它的线程释放
+ *
  * @author Jun
  * 创建时间： 2020/3/8
  */
@@ -12,28 +13,29 @@ public class Task2Semaphore {
     static Semaphore semaphore1 = new Semaphore(1);
     static Semaphore semaphore2 = new Semaphore(1);
     static Semaphore semaphore3 = new Semaphore(1);
-    static  int count = 0;
+    static int count = 0;
 
     public static void main(String[] args) {
 
-        Thread thread1 = new Thread(()->{
-            while (true){
+        Thread thread1 = new Thread(() -> {
+            while (true) {
                 try {
                     semaphore1.acquire();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 //这里判断一次就可以控制执行的次数
-                if(count < 4){
-                    System.out.println("a");
-                    count++;
-                    semaphore2.release();
+                if (count > 4) {
+                    break;
                 }
+                System.out.println("a");
+                count++;
+                semaphore2.release();
             }
         });
 
-        Thread thread2 = new Thread(()->{
-            while (true){
+        Thread thread2 = new Thread(() -> {
+            while (true) {
                 try {
                     //acquire方法会一直阻塞直到另一个线程释放他
                     semaphore2.acquire();
@@ -46,8 +48,8 @@ public class Task2Semaphore {
             }
         });
 
-        Thread thread3 = new Thread(()->{
-            while (true){
+        Thread thread3 = new Thread(() -> {
+            while (true) {
                 try {
                     semaphore3.acquire();
                 } catch (InterruptedException e) {
