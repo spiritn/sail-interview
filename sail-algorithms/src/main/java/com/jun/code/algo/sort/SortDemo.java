@@ -78,7 +78,6 @@ public class SortDemo {
 	 * 选择排序
 	 * 先求出小的数放前面
  	 */
-
 	public static void selectSort(int[] arr) {
 		int temp;
 		for(int i=0;i<arr.length-1;i++){
@@ -97,7 +96,6 @@ public class SortDemo {
 	 * 先求出大的数放后面
 	 *
  	 */
-
 	public static void bubbleSort(int[] arr) {
 		int temp;
 		for (int i = 0; i < arr.length-1; i++) {

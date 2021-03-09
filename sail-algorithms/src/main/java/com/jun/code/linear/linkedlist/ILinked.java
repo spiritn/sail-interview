@@ -26,5 +26,4 @@ public interface ILinked<E> {
 
     int size();
 
-
 }

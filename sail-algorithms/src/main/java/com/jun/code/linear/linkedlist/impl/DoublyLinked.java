@@ -17,7 +17,6 @@ public class DoublyLinked<E>  implements ILinked<E> {
 
     public DoublyLinked(){}
 
-
     public static void main(String[] args) {
         DoublyLinked<String> linked = new DoublyLinked<>();
         linked.add("first");
@@ -29,7 +28,6 @@ public class DoublyLinked<E>  implements ILinked<E> {
         System.out.println(linked);
 
         System.out.println(linked.lastIndexOf("IndexSecon0d"));
-
     }
 
 
@@ -45,7 +43,6 @@ public class DoublyLinked<E>  implements ILinked<E> {
             this.data = data;
             this.next = next;
         }
-
     }
 
     @Override
@@ -64,7 +61,6 @@ public class DoublyLinked<E>  implements ILinked<E> {
         return node(index).data;
     }
 
-
     @Override
     public E set(int index, E element) {
         checkIndex(index);
@@ -73,7 +69,6 @@ public class DoublyLinked<E>  implements ILinked<E> {
         node.data = element;
         return oldValue;
     }
-
 
     /**
      * 添加元素
@@ -122,7 +117,6 @@ public class DoublyLinked<E>  implements ILinked<E> {
         }
         size++;
     }
-
 
     /**
      * 删除元素o
@@ -175,8 +169,6 @@ public class DoublyLinked<E>  implements ILinked<E> {
         size--;
         return node.data;
     }
-
-
 
     /**
      * 查找元素首次出现的位置
