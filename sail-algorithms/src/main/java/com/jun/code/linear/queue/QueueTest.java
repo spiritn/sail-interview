@@ -7,23 +7,14 @@ public class QueueTest {
         queueDemo.enqueue(3);
         queueDemo.enqueue(5);
         queueDemo.enqueue(1);
-        System.out.println(queueDemo);
         queueDemo.enqueue(9);
-        System.out.println(queueDemo);
         queueDemo.dequeue();
-        System.out.println(queueDemo);
         queueDemo.dequeue();
-        System.out.println(queueDemo);
         queueDemo.enqueue(6);
-        System.out.println(queueDemo);
         queueDemo.dequeue();
-        System.out.println(queueDemo);
         queueDemo.dequeue();
-        System.out.println(queueDemo);
         queueDemo.dequeue();
-        System.out.println(queueDemo);
         queueDemo.dequeue();
-        System.out.println(queueDemo);
 
     }
 }
